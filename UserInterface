@@ -1,0 +1,82 @@
+import streamlit as st
+
+USER_CREDENTIALS = {
+    'admin': 'admin123',
+    'user': 'user123'
+}
+
+def set_bg_gradient():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background: linear-gradient(to bottom, #EFEEEC 10%,#F7C4C0 56%,#6B8FA6 96%,#3C596A 100%);
+            background-attachment: fixed;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+def loginbox():
+    html_code = """
+    <div style="position: absolute; left: 686px; top: 149px; right: 100px; width: 654px; height: 727px; background: linear-gradient(to bottom, #EFEEEC 10%,#F7C4C0 56%,#6B8FA6 96%,#3C596A 100%); background-attachment: fixed; box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5); border-radius: 30px; display: flex; flex-direction: column; align-items: center; padding: 20px;">
+    <h2>Log In</h2>
+    <input type="text" placeholder="Enter Username" style="width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #D9D9D9; border-radius: 30px;">
+    <input type="password" placeholder="Enter Password" style="width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #D9D9D9; border-radius: 30px;">
+    <button style="width: 80%; padding: 10px; background-color: #000000; color: white; border: none; border-radius: 30px; cursor: pointer;">Log In</button>
+    <a href="#" style="margin-top: 10px; color: black;">Forgot password?</a>
+    </div>
+    """
+    st.markdown(html_code, unsafe_allow_html=True)
+    
+    #rectangle_html ="""
+    #<div style="
+    #width: 654px; 
+    #height: 727px; 1
+    #background-color: linear-gradient(to bottom,#CA83D0 0%,#A71616 50%,#D875BB 100%);
+    #box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    #border-radius: 30px;">
+    #</div>
+    #"""
+    #st.markdown(rectangle_html, unsafe_allow_html=True)
+
+
+def main():
+    set_bg_gradient()
+    loginbox()
+    st.title("Rizzlingo")
+    st.sidebar.title("Navigation Menu")
+    page = st.sidebar.radio("Go to", ["Login","Home", "Journal now","Your Profile"])
+
+    if page == "Login":
+        login()
+    #elif page == "Home":
+    #    home()
+
+def login():
+    st.subheader("Please login to continue")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type='password')
+    loginbox()
+    if st.button("Login"):
+        if username in USER_CREDENTIALS and USER_CREDENTIALS[username] == password:
+            st.success("Login successful!")
+            st.sidebar.write(f"Welcome, {username}!")
+            st.session_state['logged_in'] = True
+            st.session_state['username'] = username
+        else:
+            st.error("Invalid username or password")
+
+def welcome():
+    if 'logged_in' in st.session_state and st.session_state['logged_in']:
+        st.write(f"Welcome, {st.session_state['username']}!")
+        st.write("You are now logged in.")
+    else:
+        st.write("Please log in first.")
+
+if __name__ == '__main__':
+    if 'logged_in' not in st.session_state:
+        st.session_state['logged_in'] = False
+    main()
