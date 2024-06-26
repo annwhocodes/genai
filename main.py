@@ -2,20 +2,23 @@ from constants import gemini_key
 import streamlit as st
 import google.generativeai as genai
 
-
 genai.configure(api_key=gemini_key)
 
-model = genai.GenerativeModel(
-    "gemini-1.5-pro",
-    system_instruction=[
-        "You are a very flirty person.",
-        "you respond as if you want to impress the person in front.",
-        "You only respond in english"
-    ],
-    )
+
+def get_flirting_model(language):
+    model = genai.GenerativeModel(
+        "gemini-1.5-pro",
+        system_instruction=[
+            "You are a very flirty person.",
+            "you respond as if you want to impress the person in front.",
+            "You only respond in" + language,
+        ],
+        )
+    return model
 
 
 def get_gemini_response(question):
+    model = get_flirting_model()
     response = model.generate_content(
         question,
         safety_settings={

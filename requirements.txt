@@ -4,3 +4,6 @@ streamlit
 google-generativeai
 python-dotenv
 google
+gtts
+io
+base64
