@@ -1,5 +1,3 @@
----
-
 # Rizzlingo
 
 **Rizzlingo** is an innovative application designed to help individuals who are shy or socially anxious by engaging them in text-based conversations. The app provides supportive and friendly interactions, retaining conversation memory and offering a diary feature for personal reflection.
